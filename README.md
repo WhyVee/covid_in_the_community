@@ -25,13 +25,26 @@ Since the data is in the CSV format, I was able to use Pandas to read the data i
 For first steps in EDA I used the Pandas functions .info() and .describe(). The most noticeable issue that would have to be addressed is that the minimum value for a number of features were -99999. This seems to have been used as a placeholder, so the first bit of cleaning was to convert all of the placeholder values to NaN. Once this was done, I counted the number of NaN entries by feature to see which features would be viable. Many of the latter features had NaN counts of about 150,000 in a total of 209,000 entries. Looking through the feature names, I compared the number of NaN values with the assumed relevance of the feature to narrow down the feature list from 105 to 23. Using .describe() again on the chosen features, I started to look at the outliers. Many of the outliers were larger hospitals that had more beds. Not wanting to throw away potentially valuable data at this stage, I decided not to remove these. I did however remove entries that had incorrect entries (some smaller hospitals had bed counts in the 100,000s).
 
 ### 3. Visualization
+The first step in visualizing the data was to pick out some features that I felt would be most relevant to the dataset. The first choice was to compare the bed occupancy rate to the number of suspected and confirmed COVID-19 patients.
 
+![Bed Occupancy and COVID Patients](/img/bedsvscovid.png)
+
+We can see from this plot that as the percentage of COVID patients increase, there is an increase in the number of inpatient bed being used. This goes with the intuition that during a pandemic, as more people are getting sick the more hospital beds are being used. I decided I needed to look at different features to see if they would tell a different story.
+After some more plotting with limited success, I decided to revisit the bed use, but look at it on a smaller scale. I plotted the number of occupied beds against the total number of beds for a couple of communities, and this is what I found:
+
+![Bed Occupancy](/img/bedusezip1.png) ![Bed Occupancy](/img/bedusezip2.png)
+
+I had been thinking about the total number of beds available as a static number, this if it moved it would not change much. But it the plots above, we can see that the total number of beds is a much more fluid number. Using just the sum of beds, either in use or the total amount, will not be as relevant as I had hoped. Taking this a step further, something that could still be of use would be the rate of occupancy. For the next plot, I decided to use the rate of inpatient beds compared to the rate of ICU beds.
+
+![Adult Bed Occupancy Rate](/img/adultbeduse.png)
+
+The graph made me stop and pause. The rates for ICU and inpatient beds seemed to follow a similar path until after the start of the new year. Though the line plots were similar, it seemed that the inpatient bed rate was slightly higher than the ICU rate; but the real questions are: is the difference statistically significant, and what does it mean if the difference is significantly different? At this point I decided to form a hypothesis.
 
 ### 4. Forming a Hypothesis
 
 
 ### 5. Hypothesis Testing
-
+![Mann-Whitney Signed Rank Test](/img/mannwhitney.png)
 
 ### 6. Drawing Conclusions
 
