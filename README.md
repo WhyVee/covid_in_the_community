@@ -11,3 +11,6 @@ https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Ca
 Description of Data:
 Source #1: CSV format, 209463 rows x 105 cols; data types: bool(1), float64(71), int64(23), object(10)
 Important Features: Hospital name, city, zip code, total beds (7 day average), inpatient beds (7 day average), ICU beds used (7 day average), total beds (7 day coverage), inpatient beds used (7 day coverage), as well as suspected COVID admissions sum for 0 to 80+ days, in 7 day increments.
+
+Institute for Health Metrics and Evaluation
+http://www.healthdata.org/sites/default/files/files/Projects/COVID/briefing_US_2020.12.04_.pdf
