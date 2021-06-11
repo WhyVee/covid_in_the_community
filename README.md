@@ -41,7 +41,15 @@ I had been thinking about the total number of beds available as a static number,
 The graph made me stop and pause. The rates for ICU and inpatient beds seemed to follow a similar path until after the start of the new year. Though the line plots were similar, it seemed that the inpatient bed rate was slightly higher than the ICU rate; but the real questions are: is the difference statistically significant, and what does it mean if the difference is significantly different? At this point I decided to form a hypothesis.
 
 ### 4. Forming a Hypothesis
+From my observations of the graph above, I wanted to test the hypothesis that one of the rates is greater than the other. Before I can start testing, though, I needed to formalize a Null Hypothesis, as well as an Alternate Hypothesis. I will also need to make an assumption about the variables being Independent and Identically Distributed. Since the occupancy rates are coming from the same hospitals, it is extremely unlikely that the vairables are truly independent. For the sake of testing though, we will assume that the variables are IID.
 
+**Null Hypothesis**
+During Covid, the average occupancy rate for inpatient beds is the same as the average occupancy rate for ICU beds
+
+**Alternate Hypothesis**
+During Covid, the average occupancy rate for inpatient beds is greater than the average occupancy rate for ICU beds
+
+Now that the we have our hypothesis, we need to determine our Alpha value as well as ensure that our test has enough statistical power. There is no compelling argument to use an Alpha value other than the standard 5%, so we will use an Alpha of 0.05. For the power calculation, I used a power calculating function from the Stats Models library. A statistical power level of greater than 80% is considered to be sufficient. Our power value was over 99%, so we have enough power to proceed with our test.
 
 ### 5. Hypothesis Testing
 ![Mann-Whitney Signed Rank Test](/img/mannwhitney.png)
