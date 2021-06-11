@@ -49,22 +49,33 @@ During Covid, the average occupancy rate for inpatient beds is the same as the a
 **Alternate Hypothesis**
 During Covid, the average occupancy rate for inpatient beds is greater than the average occupancy rate for ICU beds
 
-Now that the we have our hypothesis, we need to determine our Alpha value as well as ensure that our test has enough statistical power. There is no compelling argument to use an Alpha value other than the standard 5%, so we will use an Alpha of 0.05. For the power calculation, I used a power calculating function from the Stats Models library. A statistical power level of greater than 80% is considered to be sufficient. Our power value was over 99%, so we have enough power to proceed with our test.
+Now that the we have our hypothesis, we need to determine our Alpha value as well as ensure that our test has enough statistical power. There is no compelling argument to use an Alpha value other than the standard 5%, so we will use an Alpha of 0.05. For the power calculation, I used a power calculating function from the Stats Models library. From here, I grouped my Data Frame by hospital, and calculated the averages for the inpatient and ICU bed rates, and stored the results in a Series. Now that we know how many samples we have, we can calulate the power. A statistical power level of greater than 80% is considered to be sufficient. Our power value was over 99%, so we have enough power to proceed with our test.
+Alpha = 0.05
+Power = 99.97%
 
 ### 5. Hypothesis Testing
+Now that we have our hypothesis, our alpha, and our samples, it is time to determine what kind of test will be most appropriate. The test we use will be determined by what we are looking for, the size of our samples, and the distribution of our samples. My initial thoughts were that each sample could be viewed as a binomial event, and the averages of a series of binomial events will, given a large enough sample size, approach a normal distribution. In order to see what kind of distributions each of the rates actually follow, I plotted them using a histogram.
+
+![Inpatient Occupancy Rate Histogram](/img/inpatient_hist.png)
+
+The first plot of the Inpatient beds seems to follow a distribution that is almost normal. There is a right-leaning skew, but nothing too severe. We will move on to the ICU distribution before going any deeper.
+
+![ICU Occupancy Rate Histogram](/img/icu_hist.png)
+
+The distribution of the ICU occupancy rate seems to be something that is not normal. There is a large portion of the graph that seems to be very similar to the inpatient bed distribution, however there is a large spike appoaching zero. Since we cannot say with confidence that both distributions follow a normal distribution, we will have to use an alternative to the Z or T test.
+The Mann-Whitney Signed Rank and U Tests do not need to assume the distributions for the samples, only that they can be compared against each other. This is the test that will best fit our samples as well as our hypothesis. Below we can see the results for the Mann-Whitney Signed Rank Test. The Signed Rank Test compares each of the values for sample number 1 against sample number 2. Each Inpatient bed rate is compared to each ICU bed rate, and the winner is the sample that had more "wins".
+
 ![Mann-Whitney Signed Rank Test](/img/mannwhitney.png)
 
-### 6. Drawing Conclusions
+From the graph, we can see that the clear winner is the Inpatient bed rate. However this test is not enough, as it does not give us a P-Value that we can use to either support or reject the Null hypothesis with. In order to get a P-Value, I used the SciPy Mann-Whitney U Test function, with gave me a P-Value of 6.04e-05. This P-Value is far below our Alpha threshold of 0.05; therefore, we must reject the Null Hypothesis that the occupancy rates for Inpatient and ICU beds are the same during the COVID-19 pandemic.
 
+### 6. Drawing Conclusions
+The practical application of this is that during the pandemic, it is more likely that Inpatient bed rates will overall be higher than ICU bed rates. High occupancy rates for either is undesireable, as high occupancy rates will lead to a decrease in the quality of care. Suppose there is a hypothetical situation where a hospital has additional resources that can be used for either Inpatient beds or ICU beds. Currently the occupancy rates of both are the same. Where should the hospital direct these resources. Obviously every hospital will have a different situation and there is no clear answer, but based on the findings above, the resources going to the Inpatient beds should have a bit more weight.
 
 ### 7. Links to Sources
 
-
-
 Link to Data Source: 
 https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/uqq2-txqb
-
-
 
 Institute for Health Metrics and Evaluation
 http://www.healthdata.org/sites/default/files/files/Projects/COVID/briefing_US_2020.12.04_.pdf
